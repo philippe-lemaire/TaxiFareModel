@@ -61,7 +61,7 @@ class Trainer:
 
     def run(self):
         """set and train the pipeline"""
-
+        self.set_pipeline()
         self.pipe.fit(self.X, self.y)
 
     def evaluate(self, X_test, y_test):
@@ -78,7 +78,6 @@ if __name__ == "__main__":
     X = df
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.15)
     trainer = Trainer(X_train, y_train)
-    trainer.set_pipeline()
     trainer.run()
     # evaluate
     trainer.evaluate(X_val, y_val)

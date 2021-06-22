@@ -1,4 +1,5 @@
 # External imports
+import joblib
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import OneHotEncoder
@@ -9,6 +10,7 @@ import pandas as pd
 import mlflow
 from mlflow.tracking import MlflowClient
 from memoized_property import memoized_property
+import joblib
 
 # Local imports
 from TaxiFareModel import data, utils
@@ -99,6 +101,10 @@ class Trainer:
     def mlflow_log_metric(self, key, value):
         self.mlflow_client.log_metric(self.mlflow_run.info.run_id, key, value)
 
+    def save_model(self):
+        """Save the trained model into a model.joblib file"""
+        joblib.dump(self.pipeline, "model.joblib")
+
 
 if __name__ == "__main__":
 
@@ -111,3 +117,4 @@ if __name__ == "__main__":
     trainer.run()
     # evaluate
     trainer.evaluate(X_val, y_val)
+    trainer.save_model()
